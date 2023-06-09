@@ -1,20 +1,27 @@
 from matplotlib import pyplot as plt
 import json
 from counter import FILE_NAME
+from numpy import nanmean
 
 
 BACKGROUND_COLOR = '#202343'
+CHART_COLOR = 'white'
 
 font_title = {'family': 'serif',
-              'color':  'white',
+              'color':  CHART_COLOR,
               'weight': 'bold',
               'size': 28,
               }
 
 font_labels = {'family': 'serif',
-               'color':  'white',
+               'color':  CHART_COLOR,
                'weight': 'bold',
                'size': 11,
+               }
+
+font_legend = {'family': 'serif',
+               'weight': 'bold',
+               'size': 8,
                }
 
 
@@ -57,28 +64,44 @@ if __name__ == "__main__":
     x = counter.keys()
     y = counter.values()
 
+    # background
     plt.figure(facecolor=BACKGROUND_COLOR)
     ax = plt.axes()
     ax.set_facecolor(BACKGROUND_COLOR)
 
-    ax.tick_params(axis='x', which='major', labelsize=7, colors='white')
-    ax.tick_params(axis='y', colors='white')
-
-    ax.yaxis.label.set_color('white')
-    ax.xaxis.label.set_color('white')
-
-    ax.spines['bottom'].set_color('white')
-    ax.spines['top'].set_color(BACKGROUND_COLOR)
-    ax.spines['right'].set_color(BACKGROUND_COLOR)
-    ax.spines['left'].set_color('white')
-
-    plt.title("Number of \"FIX\" phrase in R6 patch notes", fontdict=font_title)
-    plt.xlabel("Version", fontdict=font_labels)
-
+    # axis labels
+    ax.tick_params(axis='x', which='major', labelsize=7, colors=CHART_COLOR)
+    ax.tick_params(axis='y', colors=CHART_COLOR)
+    ax.yaxis.label.set_color(CHART_COLOR)
+    ax.xaxis.label.set_color(CHART_COLOR)
     plt.setp(ax.get_xticklabels(), rotation=80, horizontalalignment='right')
 
+    # borders of chart
+    ax.spines['bottom'].set_color(CHART_COLOR)
+    ax.spines['top'].set_color(BACKGROUND_COLOR)
+    ax.spines['right'].set_color(BACKGROUND_COLOR)
+    ax.spines['left'].set_color(CHART_COLOR)
+
+    # title and x axis label
+    plt.title("Number of \"FIX\" phrase in R6 patch notes", fontdict=font_title)
+    plt.xlabel("patch", fontdict=font_labels)
+
+    # horizontal grid
     plt.grid(visible=True, axis="y", alpha=0.1)
 
+    # bars
     plt.bar(x, y, color=version_colors(x))
+
+    # average of every version line
+    plt.axhline(y=nanmean(list(y)), linestyle=":",
+                color=CHART_COLOR, linewidth=1.5,
+                label="every patch avg", alpha=0.3)
+    # average of first versions of seasons
+    plt.axhline(y=nanmean([list(y)[i] for i, k in enumerate(x) if k[-2:] == ".0"]),
+                linestyle="--", color=CHART_COLOR, linewidth=1,
+                label="first patches of seasons avg", alpha=0.3)
+
+    # legend
+    plt.legend(loc=(0.85, 0.87), labelcolor=CHART_COLOR, reverse=True, facecolor=BACKGROUND_COLOR, edgecolor=BACKGROUND_COLOR, prop=font_legend)
 
     plt.show()

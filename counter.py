@@ -3,6 +3,7 @@ from requests import get
 from bs4 import BeautifulSoup
 import json
 from tqdm import tqdm
+from os.path import isfile
 
 
 headers = {
@@ -95,15 +96,21 @@ FILE_NAME = "counter_for_version.json"
 
 if __name__ == "__main__":
 
-    counter_for_version = {}
     word = "FIX"
+    counter_for_version = {}
+
+    is_file = isfile(FILE_NAME)
+    if is_file:
+        with open(FILE_NAME, "r") as file:
+            old_counter = json.load(file)
 
     for version in tqdm(patch_notes_urls.keys(), unit="version"):
-        req = get(patch_notes_urls[version], headers)
-        soup = BeautifulSoup(req.content, 'html.parser')
-        counter_for_version[version] = len(findall(word, soup.get_text().upper()))
-
-    print(counter_for_version)
+        if old_counter.get(version):
+            counter_for_version[version] = old_counter[version]
+        else:
+            req = get(patch_notes_urls[version], headers)
+            soup = BeautifulSoup(req.content, 'html.parser')
+            counter_for_version[version] = len(findall(word, soup.get_text().upper()))
 
     with open(FILE_NAME, "w") as file:
         json.dump(counter_for_version, file)
