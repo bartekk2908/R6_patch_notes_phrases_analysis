@@ -1,13 +1,9 @@
 # Rainbow Six: Siege patch notes phrases analysis
 
-Analysis of number of chosen phrases at Rainbow Six Siege patch notes pages.
+Analysis of number of specified phrases at Rainbow Six Siege patch notes pages.
 
 ### Example
 
-<img src="" width="300" />
+![fix_chart](./charts/fix_chart.png)
 
 For more examples see `charts` directory.
-
-### Usage
-
-...
