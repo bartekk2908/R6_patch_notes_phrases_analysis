@@ -1,8 +1,11 @@
 from matplotlib import pyplot as plt
 import json
-from counter import FILE_NAME
 from numpy import nanmean
+import os
 
+
+charts_dir_name = "charts"
+distributions_dir_name = "distributions"
 
 BACKGROUND_COLOR = '#202343'
 CHART_COLOR = 'white'
@@ -26,46 +29,35 @@ font_legend = {'family': 'serif',
 
 
 def version_colors(versions):
-    seasons_colors = {
-        "3.1": "#ffc113",
-        "3.2": "#949f39",
-        "3.3": "#81a0c1",
-        "3.4": "#aa854f",
-        "4.1": "#d2005a",
-        "4.2": "#304395",
-        "4.3": "#156309",
-        "4.4": "#089eb3",
-        "5.1": "#946a97",
-        "5.2": "#447d98",
-        "5.3": "#6ca52f",
-        "5.4": "#d14008",
-        "6.1": "#ab0000",
-        "6.2": "#009cbe",
-        "6.3": "#f2a63b",
-        "6.4": "#5e7531",
-        "7.1": "#f2a63b",
-        "7.2": "#7dcbb1",
-        "7.3": "#d7ca4b",
-        "7.4": "#c04126",
-        "8.1": "#45abf3",
-        "8.2": "#5342aa",
-    }
+    seasons_colors = {}
+    with open("colors_of_seasons.txt", "r") as file:
+        for line in file:
+            version, color = line.split(" ", 1)
+            seasons_colors[version] = color[:-1]
+
     colors = []
     for v in versions:
-        colors.append(seasons_colors[v[:3]])
+        if seasons_colors.get(v[:3]):
+            colors.append(seasons_colors[v[:3]])
+        else:
+            colors.append(CHART_COLOR)
     return colors
 
 
-if __name__ == "__main__":
+def make_chart(word):
+    file_name = f"{word}_distribution.json"
 
-    with open(FILE_NAME, "r") as file:
-        counter = json.load(file)
+    try:
+        with open(f"{distributions_dir_name}\\{file_name}", "r") as file:
+            counter = json.load(file)
+    except:
+        pass
 
     x = counter.keys()
     y = counter.values()
 
     # background
-    plt.figure(facecolor=BACKGROUND_COLOR)
+    plt.figure(facecolor=BACKGROUND_COLOR, figsize=(20.0, 10.5))
     ax = plt.axes()
     ax.set_facecolor(BACKGROUND_COLOR)
 
@@ -83,7 +75,7 @@ if __name__ == "__main__":
     ax.spines['left'].set_color(CHART_COLOR)
 
     # title and x axis label
-    plt.title("Number of \"FIX\" phrase in R6 patch notes", fontdict=font_title)
+    plt.title(f"Number of \"{word.upper()}\" phrase in R6 patch notes", fontdict=font_title)
     plt.xlabel("patch", fontdict=font_labels)
 
     # horizontal grid
@@ -104,4 +96,14 @@ if __name__ == "__main__":
     # legend
     plt.legend(loc=(0.85, 0.87), labelcolor=CHART_COLOR, reverse=True, facecolor=BACKGROUND_COLOR, edgecolor=BACKGROUND_COLOR, prop=font_legend)
 
-    plt.show()
+    # plt.show()
+
+    if not os.path.exists(charts_dir_name):
+        os.makedirs(charts_dir_name)
+
+    plt.savefig(f"{charts_dir_name}\\{word}_chart.png", dpi=600)
+
+
+if __name__ == "__main__":
+    w = "fix"
+    make_chart(w)
