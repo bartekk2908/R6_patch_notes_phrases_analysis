@@ -72,3 +72,5 @@
 8.1.1 https://www.ubisoft.com/en-gb/game/rainbow-six/siege/news-updates/y68BmuBkDaaIkoOPZEk4c/y8s11-patch-notes
 8.1.2 https://www.ubisoft.com/en-gb/game/rainbow-six/siege/news-updates/HTkVw1mAg7DuA2ZKWCKe0/y8s12-patch-notes
 8.2.0 https://www.ubisoft.com/en-gb/game/rainbow-six/siege/news-updates/6a5uYfFF2CsJh1fjXSWrzK/y8s2-operation-dread-factor-patch-notes-addendum
+8.2.1 https://www.ubisoft.com/en-us/game/rainbow-six/siege/news-updates/5wcmbNXPSZwYWBYRrrFz48/y8s21-patch-notes
+8.2.2 https://www.ubisoft.com/en-us/game/rainbow-six/siege/news-updates/686r3S9cT83J0K8SUdE0PX/y8s22-patch-notes

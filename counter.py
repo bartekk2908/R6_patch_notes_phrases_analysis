@@ -4,51 +4,65 @@ from bs4 import BeautifulSoup
 import json
 from tqdm import tqdm
 import os
+from time import sleep
 
 
-headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Max-Age': '3600',
-    'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'
-    }
+webpage_content_file_name = "webpages_content"
 
 distributions_dir_name = "distributions"
 
 patch_notes_urls = {}
-with open("urls.txt", "r") as file:
-    for line in file:
-        version, url = line.split(" ", 1)
-        patch_notes_urls[version] = url[:-1]
+try:
+    with open("urls.txt", "r") as file:
+        for line in file:
+            version, url = line.split(" ", 1)
+            patch_notes_urls[version] = url[:-1]
+except FileNotFoundError:
+    print(f"Can't find 'urls.txt' file.")
+    exit()
 
 
-def count_word(word="fix"):
+def count_word(word="fix", saved_webpages_content=True):
     counter_for_version = {}
-    file_name = f"{word}_distribution.json"
+    distribution_file_name = f"{word}_distribution.json"
 
+    # Create directory for JSON files if it doesn't exist
     if not os.path.exists(distributions_dir_name):
         os.makedirs(distributions_dir_name)
 
-    is_file = os.path.isfile(f"{distributions_dir_name}\\{file_name}")
-    if is_file:
-        with open(f"{distributions_dir_name}\\{file_name}", "r") as file:
-            old_counter = json.load(file)
+    # Get already saved content of patch notes webpages
+    is_file = os.path.isfile(f"{webpage_content_file_name}.json")
+    if is_file and saved_webpages_content:
+        with open(f"{webpage_content_file_name}.json", "r") as file:
+            webpages_content = json.load(file)
     else:
-        old_counter = {}
+        webpages_content = {}
 
+    # Downloading content of webpages if needed
+    print("Downloading content of webpages...")
     for version in tqdm(patch_notes_urls.keys(), unit="version"):
-        if old_counter.get(version):
-            counter_for_version[version] = old_counter[version]
-        else:
-            req = get(patch_notes_urls[version], headers)
+        if not webpages_content.get(version):
+            req = get(patch_notes_urls[version])
             soup = BeautifulSoup(req.content, 'html.parser')
-            counter_for_version[version] = len(findall(word.lower(), soup.get_text().lower()))
+            webpages_content[version] = soup.get_text()
 
-    with open(f"{distributions_dir_name}\\{file_name}", "w") as file:
+    sleep(0.1)
+
+    # Get count of word for each patch notes
+    print("Counting phrases...")
+    sleep(0.1)
+    for version in tqdm(patch_notes_urls.keys(), unit="version"):
+        counter_for_version[version] = len(findall(word.lower(), webpages_content[version].lower()))
+
+    # Save new/updated webpages content to JSON file
+    with open(f"{webpage_content_file_name}.json", "w") as file:
+        json.dump(webpages_content, file)
+
+    # Save counter to JSON file
+    with open(f"{distributions_dir_name}\\{distribution_file_name}", "w") as file:
         json.dump(counter_for_version, file)
 
 
 if __name__ == "__main__":
     w = "fix"
-    count_word(w)
+    count_word(w, saved_webpages_content=True)

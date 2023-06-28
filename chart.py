@@ -10,30 +10,33 @@ distributions_dir_name = "distributions"
 BACKGROUND_COLOR = '#202343'
 CHART_COLOR = 'white'
 
-font_title = {'family': 'serif',
+font_title = {'family': 'impact',
               'color':  CHART_COLOR,
               'weight': 'bold',
               'size': 28,
               }
 
-font_labels = {'family': 'serif',
+font_labels = {'family': 'impact',
                'color':  CHART_COLOR,
                'weight': 'bold',
-               'size': 11,
+               'size': 13,
                }
 
-font_legend = {'family': 'serif',
+font_legend = {'family': 'impact',
                'weight': 'bold',
-               'size': 8,
+               'size': 10,
                }
 
 
 def version_colors(versions):
     seasons_colors = {}
-    with open("colors_of_seasons.txt", "r") as file:
-        for line in file:
-            version, color = line.split(" ", 1)
-            seasons_colors[version] = color[:-1]
+    try:
+        with open("colors_of_seasons.txt", "r") as file:
+            for line in file:
+                version, color = line.split(" ", 1)
+                seasons_colors[version] = color[:-1]
+    except FileNotFoundError:
+        print(f"Can't find 'colors_of_seasons.txt' file.")
 
     colors = []
     for v in versions:
@@ -50,8 +53,13 @@ def make_chart(word):
     try:
         with open(f"{distributions_dir_name}\\{file_name}", "r") as file:
             counter = json.load(file)
-    except:
-        pass
+    except FileNotFoundError:
+        if not os.path.exists(distributions_dir_name):
+            print(f"Can't find '{distributions_dir_name}' directory.")
+        else:
+            print(f"Can't find JSON file of '{word}' phrase distribution."
+                  f" Make sure that '{word}_distribution.json' file is in '{distributions_dir_name}' directory.")
+        exit()
 
     x = counter.keys()
     y = counter.values()
@@ -98,6 +106,7 @@ def make_chart(word):
 
     # plt.show()
 
+    # Create directory for PNG files if it doesn't exist
     if not os.path.exists(charts_dir_name):
         os.makedirs(charts_dir_name)
 
