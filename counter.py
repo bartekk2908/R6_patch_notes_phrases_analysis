@@ -19,7 +19,6 @@ try:
             patch_notes_urls[version] = url[:-1]
 except FileNotFoundError:
     print(f"Can't find 'urls.txt' file.")
-    exit()
 
 
 def count_word(word="fix", saved_webpages_content=True):
@@ -44,7 +43,7 @@ def count_word(word="fix", saved_webpages_content=True):
         if not webpages_content.get(version):
             req = get(patch_notes_urls[version])
             soup = BeautifulSoup(req.content, 'html.parser')
-            webpages_content[version] = soup.get_text()
+            webpages_content[version] = soup.find_all("div", {"class": "updatesDetail__article__content"})[0].get_text()
 
     sleep(0.1)
 
@@ -64,5 +63,5 @@ def count_word(word="fix", saved_webpages_content=True):
 
 
 if __name__ == "__main__":
-    w = "fix"
+    w = "fixed"
     count_word(w, saved_webpages_content=True)

@@ -114,5 +114,5 @@ def make_chart(word):
 
 
 if __name__ == "__main__":
-    w = "fix"
+    w = "fixed"
     make_chart(w)
