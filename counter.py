@@ -21,7 +21,7 @@ except FileNotFoundError:
     print(f"Can't find 'urls.txt' file.")
 
 
-def count_word(word="fix", saved_webpages_content=True):
+def count_word(word="fix", saved_webpages_content=True, logs=True):
     counter_for_version = {}
     distribution_file_name = f"{word}_distribution.json"
 
@@ -38,8 +38,9 @@ def count_word(word="fix", saved_webpages_content=True):
         webpages_content = {}
 
     # Downloading content of webpages if needed
-    print("Downloading content of webpages...")
-    for version in tqdm(patch_notes_urls.keys(), unit="version"):
+    print("Downloading content of webpages...") if logs else None
+    sleep(0.1)
+    for version in tqdm(patch_notes_urls.keys(), unit="version", disable=False if logs else True):
         if not webpages_content.get(version):
             req = get(patch_notes_urls[version])
             soup = BeautifulSoup(req.content, 'html.parser')
@@ -48,9 +49,9 @@ def count_word(word="fix", saved_webpages_content=True):
     sleep(0.1)
 
     # Get count of word for each patch notes
-    print("Counting phrases...")
+    print("Counting phrases...") if logs else None
     sleep(0.1)
-    for version in tqdm(patch_notes_urls.keys(), unit="version"):
+    for version in tqdm(patch_notes_urls.keys(), unit="version", disable=False if logs else True):
         counter_for_version[version] = len(findall(word.lower(), webpages_content[version].lower()))
 
     # Save new/updated webpages content to JSON file

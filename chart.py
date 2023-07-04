@@ -127,9 +127,9 @@ def make_chart(x, y, word, sum_to_seasons=False):
         os.makedirs(charts_dir_name)
 
     if not sum_to_seasons:
-        plt.savefig(f"{charts_dir_name}\\{word}_chart_versions.png", dpi=600)
+        plt.savefig(f"{charts_dir_name}\\{word}_chart_v.png", dpi=600)
     else:
-        plt.savefig(f"{charts_dir_name}\\{word}_chart_seasons.png", dpi=600)
+        plt.savefig(f"{charts_dir_name}\\{word}_chart_s.png", dpi=600)
 
 
 if __name__ == "__main__":
