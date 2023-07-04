@@ -47,7 +47,7 @@ def version_colors(versions):
     return colors
 
 
-def make_chart(word):
+def get_distribution(word):
     file_name = f"{word}_distribution.json"
 
     try:
@@ -61,8 +61,23 @@ def make_chart(word):
                   f" Make sure that '{word}_distribution.json' file is in '{distributions_dir_name}' directory.")
         exit()
 
-    x = counter.keys()
-    y = counter.values()
+    return list(counter.keys()), list(counter.values())
+
+
+def sum_for_seasons_distribution(versions, values):
+    seasons_distribution = {}
+    for i in range(len(versions)):
+        if not seasons_distribution.get(versions[i][:3]):
+            seasons_distribution[versions[i][:3]] = 0
+        seasons_distribution[versions[i][:3]] += values[i]
+
+    return list(seasons_distribution.keys()), list(seasons_distribution.values())
+
+
+def make_chart(x, y, word, sum_to_seasons=False):
+
+    if sum_to_seasons:
+        x, y = sum_for_seasons_distribution(x, y)
 
     # background
     plt.figure(facecolor=BACKGROUND_COLOR, figsize=(20.0, 10.5))
@@ -95,11 +110,12 @@ def make_chart(word):
     # average of every version line
     plt.axhline(y=nanmean(list(y)), linestyle=":",
                 color=CHART_COLOR, linewidth=1.5,
-                label="every patch avg", alpha=0.3)
+                label="overall avg", alpha=0.3)
     # average of first versions of seasons
-    plt.axhline(y=nanmean([list(y)[i] for i, k in enumerate(x) if k[-2:] == ".0"]),
-                linestyle="--", color=CHART_COLOR, linewidth=1,
-                label="first patches of seasons avg", alpha=0.3)
+    if not sum_to_seasons:
+        plt.axhline(y=nanmean([list(y)[i] for i, k in enumerate(x) if k[-2:] == ".0"]),
+                    linestyle="--", color=CHART_COLOR, linewidth=1,
+                    label="first patches of seasons avg", alpha=0.3)
 
     # legend
     plt.legend(loc=(0.85, 0.87), labelcolor=CHART_COLOR, reverse=True, facecolor=BACKGROUND_COLOR, edgecolor=BACKGROUND_COLOR, prop=font_legend)
@@ -110,9 +126,12 @@ def make_chart(word):
     if not os.path.exists(charts_dir_name):
         os.makedirs(charts_dir_name)
 
-    plt.savefig(f"{charts_dir_name}\\{word}_chart.png", dpi=600)
+    if not sum_to_seasons:
+        plt.savefig(f"{charts_dir_name}\\{word}_chart_versions.png", dpi=600)
+    else:
+        plt.savefig(f"{charts_dir_name}\\{word}_chart_seasons.png", dpi=600)
 
 
 if __name__ == "__main__":
     w = "fixed"
-    make_chart(w)
+    make_chart(*get_distribution(w), w, sum_to_seasons=False)
