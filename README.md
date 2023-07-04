@@ -6,6 +6,6 @@ Analysis of number of specified phrases at Rainbow Six Siege patch notes pages.
 
 Last version in example: __8.2.2__
 
-![fix_chart](./charts/fix_chart.png)
+![fix_chart](./charts/fixed_chart_v.png)
 
 For more examples see `charts` directory.
