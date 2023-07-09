@@ -21,7 +21,7 @@ except FileNotFoundError:
     print(f"Can't find 'urls.txt' file.")
 
 
-def count_word(word="fix", saved_webpages_content=True, logs=True):
+def count_word(word, saved_webpages_content=True, logs=True):
     counter_for_version = {}
     distribution_file_name = f"{word}_distribution.json"
 
@@ -65,4 +65,4 @@ def count_word(word="fix", saved_webpages_content=True, logs=True):
 
 if __name__ == "__main__":
     w = "fixed"
-    count_word(w, saved_webpages_content=True)
+    count_word(word=w, saved_webpages_content=True)

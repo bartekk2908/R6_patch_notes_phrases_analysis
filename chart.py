@@ -6,6 +6,7 @@ import os
 
 charts_dir_name = "charts"
 distributions_dir_name = "distributions"
+colors_file_name = "colors"
 
 BACKGROUND_COLOR = '#202343'
 CHART_COLOR = 'white'
@@ -31,12 +32,12 @@ font_legend = {'family': 'impact',
 def version_colors(versions):
     seasons_colors = {}
     try:
-        with open("colors_of_seasons.txt", "r") as file:
+        with open(f"{colors_file_name}.txt", "r") as file:
             for line in file:
                 version, color = line.split(" ", 1)
                 seasons_colors[version] = color[:-1]
     except FileNotFoundError:
-        print(f"Can't find 'colors_of_seasons.txt' file.")
+        print(f"Can't find '{colors_file_name}.txt' file.")
 
     colors = []
     for v in versions:
