@@ -8,11 +8,15 @@ at every ''Rainbow Six: Siege'' patch notes page.
 
 The data of webpages was scrapped with Python's BeautifulSoup4 module
 and is stored in `webpages_content.json` file.
-
 Urls have been collected manually from Ubisoft's page
 and are stored in `urls.txt` file as ''version_number url'' pairs. 
+Unfortunately I wasn't able to find patch notes pages for first two years of game
+so the first version is __3.1.1__.
 
-Colors for each season are specified in `colors.txt` file as ''version_number color'' pairs.
+The charts are made with Python's MatPlotLib module.
+Colors that represent each season are specified in `colors.txt` file as ''version_number color'' pairs.
+
+Version number format 
 
 
 ## Example
@@ -35,22 +39,25 @@ For more examples see `charts` directory.
 ### Setup
 
 To use it clone this repository via `git clone <url_of_this_repo>` command in Git Bash
-and create virtual environment in its directory. Then install packages specified in `requirements.txt` file.
+and create virtual environment in directory of cloned repo.\
+Then install packages specified in `requirements.txt` file.
 
 
 ### Getting distribution
 
-Run `counter.py` file to get distribution of given phrase.
-You can specify phrase by changing value of `word` argument.
+Run `counter.py` file to get distribution of given phrase.\
+You can specify phrase by changing value of `word` argument.\
 You can also decide to download again entire content of webpages
-by changing `saved_webpages_content` argument to False.
+by changing `saved_webpages_content` argument to __False__ (scrapping should take about 2-3 minutes).\
+If in `urls.txt` file there is specified version of game that hasn't been scrapped yet,
+it will be scrapped automatically.\
+Distributions will be saved in `distributions` directory as `.json` files.
 
 
 ### Creating chart
 
-
-
-
-### Updating distributions and charts
-
-
+Run `chart.py` file to generate chart of distribution of given phrase.\
+You can specify phrase by changing value of `word` argument.\
+You can decide if you want to generate chart of distribution for every version or for every season
+by changing `sum_to_seasons` argument's value.
+Charts will be saved in `charts` directory as `.png` files.

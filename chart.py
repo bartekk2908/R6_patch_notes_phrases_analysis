@@ -135,4 +135,4 @@ def make_chart(x, y, word, sum_to_seasons=False):
 
 if __name__ == "__main__":
     w = "fixed"
-    make_chart(*get_distribution(w), w, sum_to_seasons=False)
+    make_chart(*get_distribution(word=w), word=w, sum_to_seasons=False)
