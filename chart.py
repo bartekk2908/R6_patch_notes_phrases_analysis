@@ -25,7 +25,7 @@ font_labels = {'family': 'impact',
 
 font_legend = {'family': 'impact',
                'weight': 'bold',
-               'size': 10,
+               'size': 14,
                }
 
 
@@ -119,7 +119,8 @@ def make_chart(x, y, word, sum_to_seasons=False):
                     label="first patches of seasons avg", alpha=0.3)
 
     # legend
-    plt.legend(loc=(0.85, 0.87), labelcolor=CHART_COLOR, reverse=True, facecolor=BACKGROUND_COLOR, edgecolor=BACKGROUND_COLOR, prop=font_legend)
+    legend = plt.legend(loc=(0.85, 0.87), labelcolor=CHART_COLOR, reverse=True, facecolor=BACKGROUND_COLOR, edgecolor=BACKGROUND_COLOR,
+               prop=font_legend, numpoints=1)
 
     # plt.show()
 

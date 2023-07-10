@@ -16,7 +16,7 @@ so the first version is __3.1.1__.
 The charts are made with Python's MatPlotLib module.
 Colors that represent each season are specified in `colors.txt` file as ''version_number color'' pairs.
 
-Version number format 
+Version number format is following: [year].[season_of_year].[number_of_patch_in_season]
 
 
 ## Example
