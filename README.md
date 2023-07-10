@@ -4,16 +4,18 @@
 ## Description
 
 The project is about visualizing distribution of specified phrases
-at every ''Rainbow Six: Siege'' patch notes page.
+at every Rainbow Six: Siege patch notes page.
 
-The data of webpages was scrapped with Python's BeautifulSoup4 module
+The idea comes from Raibow Six: Siege being famous for having a lot of issues and bugs so I was curious how many fixes are being made every update. 
+
+The data of webpages was scrapped with Python's [BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) module
 and is stored in `webpages_content.json` file.
-Urls have been collected manually from Ubisoft's page
+Urls have been collected manually from [Ubisoft's page](https://www.ubisoft.com/)
 and are stored in `urls.txt` file as ''version_number url'' pairs. 
 Unfortunately I wasn't able to find patch notes pages for first two years of game
 so the first version is __3.1.1__.
 
-The charts are made with Python's MatPlotLib module.
+The charts are made with Python's [MatPlotLib](https://matplotlib.org/) module.
 Colors that represent each season are specified in `colors.txt` file as ''version_number color'' pairs.
 
 Version number format is following: [year].[season_of_year].[number_of_patch_in_season]
@@ -59,5 +61,5 @@ Distributions will be saved in `distributions` directory as `.json` files.
 Run `chart.py` file to generate chart of distribution of given phrase.\
 You can specify phrase by changing value of `word` argument.\
 You can decide if you want to generate chart of distribution for every version or for every season
-by changing `sum_to_seasons` argument's value.
+by changing `sum_to_seasons` argument's value.\
 Charts will be saved in `charts` directory as `.png` files.
