@@ -1,4 +1,4 @@
-# Analysis of specified phrases at ''Rainbow Six: Siege'' patch notes pages
+# Analysis of specified phrases at Rainbow Six: Siege patch notes pages
 
 
 ## Description
@@ -6,7 +6,7 @@
 The project is about visualizing distribution of specified phrases
 at every Rainbow Six: Siege patch notes page.
 
-The idea comes from Raibow Six: Siege being famous for having a lot of issues and bugs so I was curious how many fixes are being made every update. 
+The idea comes from Rainbow Six: Siege being famous for having a lot of issues and bugs so I was curious how many fixes are being made every update. 
 
 The data of webpages was scrapped with Python's [BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) module
 and is stored in `webpages_content.json` file.
@@ -23,7 +23,7 @@ Version number format is following: [year].[season_of_year].[number_of_patch_in_
 
 ## Example
 
-Last version in example: __8.2.2__
+Last version in example: __8.2.3__
 
 Chart for every version of game:
 
