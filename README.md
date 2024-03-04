@@ -23,7 +23,7 @@ Version number format is following: [year].[season_of_year].[number_of_patch_in_
 
 ## Example
 
-Last version in example: __8.4.1__
+Last version in example: __8.4.3__
 
 Chart for every version of game:
 
