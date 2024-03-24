@@ -40,7 +40,7 @@ def count_word(word, saved_webpages_content=True, logs=True):
     # Downloading content of webpages if needed
     print("Downloading content of webpages...") if logs else None
     sleep(0.1)
-    for version in tqdm(patch_notes_urls.keys(), unit="version", disable=False if logs else True):
+    for version in tqdm(patch_notes_urls.keys(), unit="version", disable=not logs):
         if not webpages_content.get(version):
             req = get(patch_notes_urls[version])
             soup = BeautifulSoup(req.content, 'html.parser')
