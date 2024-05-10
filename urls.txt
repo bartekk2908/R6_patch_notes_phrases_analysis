@@ -84,3 +84,6 @@
 8.4.2 https://www.ubisoft.com/en-us/game/rainbow-six/siege/news-updates/5YK5Mlv2HjWgV9S2uUXYEO/y8s42-patch-notes
 8.4.3 https://www.ubisoft.com/en-us/game/rainbow-six/siege/news-updates/5plhBU3RgPKheHPernoEWK/y8s43-patch-notes
 9.1.0 https://www.ubisoft.com/en-us/game/rainbow-six/siege/news-updates/6P50LnjwQr8ryAYoAPXZjk/y9s1-patch-notes-addendum
+9.1.1 https://www.ubisoft.com/en-us/game/rainbow-six/siege/news-updates/44C6itnVD8jyYL0gpNeTFg/y9s11-patch-notes
+9.1.2 https://www.ubisoft.com/en-us/game/rainbow-six/siege/news-updates/6r7w3uI79e9NepbNoimFra/y9s12-patch-notes
+9.1.3 https://www.ubisoft.com/en-us/game/rainbow-six/siege/news-updates/6ZsfBMeGT0Anuu0IHjDQ0P/y9s13-patch-notes
