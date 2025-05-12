@@ -41,8 +41,9 @@ def version_colors(versions):
 
     colors = []
     for v in versions:
-        if seasons_colors.get(v[:3]):
-            colors.append(seasons_colors[v[:3]])
+        season = '.'.join(v.split('.')[:2])
+        if seasons_colors.get(season):
+            colors.append(seasons_colors[season])
         else:
             colors.append(CHART_COLOR)
     return colors
@@ -68,9 +69,10 @@ def get_distribution(word):
 def sum_for_seasons_distribution(versions, values):
     seasons_distribution = {}
     for i in range(len(versions)):
-        if not seasons_distribution.get(versions[i][:3]):
-            seasons_distribution[versions[i][:3]] = 0
-        seasons_distribution[versions[i][:3]] += values[i]
+        season = '.'.join(versions[i].split('.')[:2])
+        if not seasons_distribution.get(season):
+            seasons_distribution[season] = 0
+        seasons_distribution[season] += values[i]
 
     return list(seasons_distribution.keys()), list(seasons_distribution.values())
 
